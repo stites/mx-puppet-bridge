@@ -125,6 +125,7 @@ export interface IMessageEvent {
 	body: string;
 	formattedBody?: string;
 	emote?: boolean;
+	thread?: boolean;
 	notice?: boolean;
 	eventId?: string;
 }

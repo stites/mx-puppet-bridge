@@ -293,11 +293,18 @@ export class RemoteEventHandler {
 			send.formatted_body = opts.formattedBody;
 		}
 		if (origEventId) {
-			send["m.relates_to"] = {
-				"m.in_reply_to": {
+			if (opts.thread) {
+				send["m.relates_to"] = {
+					rel_type: "m.thread",
 					event_id: origEventId,
-				},
-			};
+				};
+			} else {
+				send["m.relates_to"] = {
+					"m.in_reply_to": {
+						event_id: origEventId,
+					},
+				};
+			}
 			try {
 				const info = await this.bridge.getEventInfo(mxid, origEventId, client);
 				if (info) {
